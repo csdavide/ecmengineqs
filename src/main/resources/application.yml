@@ -1,0 +1,57 @@
+quarkus:
+  http:
+    port: 9000
+
+  log:
+    category:
+      "it.doqui.index":
+        level: DEBUG
+    file:
+      enable: true
+      path: "/appserv/quarkus/ecmengine/log/ecmengineqs.log"
+      rotation:
+        max-file-size: 1M
+        max-backup-index: 100
+
+  cxf:
+    path: /cxf
+    endpoint:
+      key:
+        soap-binding: "http://www.w3.org/2003/05/soap/bindings/HTTP/?mtom=true"
+      "/streamingWS":
+        implementor: it.doqui.index.ecmengine.mtom.impl.StreamingServiceImpl
+
+  datasource:
+    devservices:
+      enabled: false
+    db-kind: mysql
+    username: "indexdb"
+    password: "Mypass!22"
+    jdbc:
+      url: jdbc:mysql://tst-domdb80.csi.it:3306/indexf1m8
+
+  hibernate-orm:
+    database:
+      generation: update
+    log:
+      sql: true
+
+solr:
+  #endpoint: "http://tst-solrdoquiactaf3.csi.it/solr"
+  endpoint: "http://tst-solracta03.csi.it/solr"
+  username: doqui
+  password: doqui
+  fullTextSizeThreshold: 10485760
+  asynchronousReindexSizeThreshold: 4194304
+
+content-store:
+  store: "/usr/prod/fs/ecmcontent3/filiera3/content/contentstore"
+
+"%dev":
+  quarkus:
+    log:
+      file:
+        enable: false
+  proxy:
+    store:
+      url: "http://dev-wldindex01.csi.it:9001/files"
